@@ -4,6 +4,8 @@
 
 VMAT System is a web application designed for real-time vehicle management and tracking. It features live GPS tracking, dynamic data updates, and interactive analytics with a modern, responsive UI. The app integrates key functionalities such as geofence management and a built-in dark/light theme toggle, ensuring an optimal user experience across all devices.
 
+![IMG_20250314_131325](https://github.com/user-attachments/assets/4507ab3d-8319-4738-a89a-de526304f741)
+
 ## Features
 
 - **Real-Time Vehicle Tracking:**  
