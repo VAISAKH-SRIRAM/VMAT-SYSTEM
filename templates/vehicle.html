@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Vehicle Details{% endblock %}
+
+{% block content %}
+<div class="vehicle-details">
+  <section class="detail-card">
+    <header class="detail-section__header">
+      <h2><i class="fas fa-car-side"></i> Vehicle Information</h2>
+    </header>
+    <div class="detail-section">
+      <div class="info-row">
+        <span class="info-label"><i class="fas fa-tag"></i> Name:</span>
+        <span class="info-value">{{ vehicle.name }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label"><i class="fas fa-passport"></i> License Plate:</span>
+        <span class="info-value">{{ vehicle.license_plate }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label"><i class="fas fa-tachometer-alt"></i> Speed:</span>
+        <span class="info-value">{{ vehicle.speed|default(0) }} km/h</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label"><i class="fas fa-circle-notch"></i> Status:</span>
+        <span class="info-value status-{{ vehicle.status }}">
+          {{ vehicle.status|title }}
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section class="detail-card">
+    <header class="detail-section__header">
+      <h2><i class="fas fa-id-card"></i> Driver Details</h2>
+    </header>
+    <div class="detail-section">
+      <div class="info-row">
+        <span class="info-label"><i class="fas fa-user"></i> Name:</span>
+        <span class="info-value">{{ vehicle.driver_name }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label"><i class="fas fa-id-badge"></i> License ID:</span>
+        <span class="info-value">{{ vehicle.driver_license }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label"><i class="fas fa-star"></i> Experience:</span>
+        <span class="info-value">{{ vehicle.driver_experience }} years</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label"><i class="fas fa-phone"></i> Contact:</span>
+        <span class="info-value">
+          <a href="tel:{{ vehicle.driver_contact }}" class="contact-button">
+            <i class="fas fa-phone-alt"></i> {{ vehicle.driver_contact }}
+          </a>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section class="detail-card detail-card--full">
+    <header class="detail-section__header">
+      <h2><i class="fas fa-map-marked-alt"></i> Live Location</h2>
+    </header>
+    <div class="detail-section">
+      <div id="vehicle-map" class="map-container" style="height: 500px; border-radius: 1rem;"></div>
+    </div>
+  </section>
+</div>
+
+<script>
+  // Initialize vehicle-specific map
+  const vehicleMap = L.map('vehicle-map').setView([{{ vehicle.lat }}, {{ vehicle.lng }}], 13);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(vehicleMap);
+  L.marker([{{ vehicle.lat }}, {{ vehicle.lng }}], {
+    icon: L.divIcon({
+      className: 'vehicle-marker',
+      html: `<div class="marker-pin"><i class="fas fa-truck-moving"></i></div>`,
+      iconSize: [40, 40]
+    })
+  }).addTo(vehicleMap);
+  vehicleMap.zoomControl.setPosition('topright');
+  if (L.Control.Compass) {
+    new L.Control.Compass({ autoActive: true }).addTo(vehicleMap);
+  }
+</script>
+{% endblock %}
+

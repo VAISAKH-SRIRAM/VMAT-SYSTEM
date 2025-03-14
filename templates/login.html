@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+  <div class="auth-card">
+    <header class="auth-card__header">
+      <div class="logo logo--center" aria-label="VMAT System Logo">
+        <span class="logo__icon">⚡</span>
+        <span class="logo__text">VMAT System</span>
+      </div>
+      <h1 class="auth-card__title">Vehicle Management &amp; Tracking System</h1>
+    </header>
+
+    {% if error %}
+    <div class="alert alert--error">
+      <i class="fas fa-exclamation-triangle"></i>
+      <span>{{ error }}</span>
+    </div>
+    {% endif %}
+
+    <form method="POST" class="auth-form">
+      <div class="input-group">
+        <label class="input-group__label" for="email">Email Address</label>
+        <div class="input-group__container">
+          <i class="fas fa-envelope input-group__icon"></i>
+          <input type="email" id="email" name="email" class="input-group__field" placeholder="name@department.org" required>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-group__label" for="password">Password</label>
+        <div class="input-group__container">
+          <i class="fas fa-lock input-group__icon"></i>
+          <input type="password" id="password" name="password" class="input-group__field" placeholder="••••••••" required>
+          <button type="button" class="input-group__reveal">
+            <i class="fas fa-eye"></i>
+          </button>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn--block">
+        <i class="fas fa-sign-in-alt"></i>
+        <span>Authenticate</span>
+      </button>
+
+      <div class="auth-form__divider">
+        <span>or continue with</span>
+      </div>
+
+      <div class="auth-providers">
+        <button type="button" class="auth-provider auth-provider--microsoft">
+          <i class="fab fa-microsoft"></i>
+        </button>
+        <button type="button" class="auth-provider auth-provider--google">
+          <i class="fab fa-google"></i>
+        </button>
+        <button type="button" class="auth-provider auth-provider--okta">
+          <i class="fas fa-key"></i>
+        </button>
+      </div>
+    </form>
+
+    <footer class="auth-card__footer">
+      <a href="/register" class="link">Create institutional account</a>
+      <a href="/forgot-password" class="link">Recover credentials</a>
+    </footer>
+  </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<!-- Optional inline style block to refine the vehicle cards specifically on this page -->
+<style>
+  /* Make sure the link text and card details are clearly visible on dark backgrounds */
+  .vehicle-link {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .vehicle-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: var(--shadow);
+  }
+
+  .vehicle-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  .vehicle-info h3 {
+    margin: 0 0 0.25rem 0;
+    color: #ffffff; /* Ensures the vehicle name stands out */
+    font-size: 1.1rem;
+  }
+
+  .license-plate {
+    color: #b0b0b0; /* Slightly lighter gray for contrast */
+    font-size: 0.9rem;
+  }
+
+  .vehicle-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: #fff;
+  }
+
+  /* Change text colors on hover for a more interactive feel */
+  .vehicle-card:hover .vehicle-info h3 {
+    color: var(--accent);
+  }
+  .vehicle-card:hover .license-plate {
+    color: var(--accent-dark);
+  }
+</style>
+
+<div class="dashboard-grid">
+  <div class="map-container">
+    <div id="map"></div>
+  </div>
+
+  <div class="vehicle-list">
+    <!-- Optional heading if you'd like a label above the vehicle list -->
+    <!-- <h2 style="color: #fff; margin-bottom: 1rem;">Active Vehicles</h2> -->
+    {% for vehicle in vehicles %}
+      <a href="{{ url_for('vehicle', id=vehicle.id) }}" class="vehicle-link">
+        <div class="vehicle-card" data-vehicle-id="{{ vehicle.id }}">
+          <div class="vehicle-info">
+            <h3>{{ vehicle.name }}</h3>
+            <p class="license-plate">{{ vehicle.license_plate }}</p>
+          </div>
+          <div class="vehicle-meta">
+            <span class="vehicle-speed">{{ vehicle.speed|default(0) }} km/h</span>
+            <div class="vehicle-status status-{{ vehicle.status }}"></div>
+          </div>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+

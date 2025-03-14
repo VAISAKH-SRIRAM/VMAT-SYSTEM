@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>VMAT System - {% block title %}{% endblock %}</title>
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500;700&display=swap" />
+  <!-- Base stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <!-- External libraries -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+<body class="fade-out">
+  <nav class="navbar" role="navigation">
+    <div class="container nav-container">
+      <div class="logo" aria-label="VMAT System Logo">
+        VMAT System
+      </div>
+      <div class="nav-links">
+        <a href="{{ url_for('dashboard') }}" class="btn btn-primary">
+          <i class="fas fa-tachometer-alt"></i> Dashboard
+        </a>
+        <a href="{{ url_for('analytics') }}" class="btn btn-primary">
+          <i class="fas fa-chart-line"></i> Analytics
+        </a>
+        <a href="{{ url_for('geofences') }}" class="btn btn-primary">
+          <i class="fas fa-map-marker-alt"></i> Geofences
+        </a>
+        {% if current_user.is_authenticated %}
+          <a href="{{ url_for('logout') }}" class="btn btn-primary">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </a>
+        {% else %}
+          <a href="{{ url_for('login') }}" class="btn btn-primary">
+            <i class="fas fa-sign-in-alt"></i> Login
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- External Scripts -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+  <script src="{{ url_for('static', filename='js/map.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
+

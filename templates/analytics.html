@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Analytics{% endblock %}
+
+{% block content %}
+<div class="analytics-grid">
+  <div class="neuomorphic-card">
+    <h3>📈 Speed Distribution</h3>
+    <canvas id="speedChart"></canvas>
+  </div>
+  
+  <div class="neuomorphic-card">
+    <h3>🗺️ Geofence Activity</h3>
+    <canvas id="geofenceChart"></canvas>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Speed Chart
+  const speedCtx = document.getElementById('speedChart').getContext('2d');
+  new Chart(speedCtx, {
+      type: 'line',
+      data: {
+          labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'],
+          datasets: [{
+              label: 'Speed (km/h)',
+              data: [65, 59, 80, 81, 56, 55],
+              borderColor: '#00c896',
+              tension: 0.4
+          }]
+      }
+  });
+
+  // Geofence Chart
+  const geofenceCtx = document.getElementById('geofenceChart').getContext('2d');
+  new Chart(geofenceCtx, {
+      type: 'doughnut',
+      data: {
+          labels: ['Active Zones', 'Inactive Zones'],
+          datasets: [{
+              data: [3, 1],
+              backgroundColor: ['#00c896', '#e9ecef']
+          }]
+      }
+  });
+</script>
+{% endblock %}
+
